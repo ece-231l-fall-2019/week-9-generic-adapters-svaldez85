@@ -68,7 +68,7 @@ public:
 ```
 I supplied the code for my single linked list StringList implementation converted to a generic List type
 but it will be easier to convert your already implemented double linked list StringList class to a
-generic tempalted version instead of modifying my code. With a templated class, all methods MUST be implemented
+generic templated version instead of modifying my code. With a templated class, all methods MUST be implemented
 in the header file. You cannot put templated methods into a .cpp file!
 
 I will go over the [std::initializer_list](https://en.cppreference.com/w/cpp/utility/initializer_list) constructor in class.
@@ -78,7 +78,7 @@ I will go over the [std::initializer_list](https://en.cppreference.com/w/cpp/uti
 The [Stack](https://en.cppreference.com/w/cpp/container/stack)
 and [Queue](https://en.cppreference.com/w/cpp/container/queue) classes are just simple adapter classes that
 put a different functional interface on top of an underlying container class, in this case your List class.
-You will need to create and implement the follwing classes. The Queue class:
+You will need to create and implement the following classes. The Queue class:
 ```
 template<typename T>
 Queue
