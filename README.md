@@ -32,8 +32,8 @@ private:
   } llist;
  ... etc.
 public:
-  push_back(const std::string& str);
-  push_front(const std::string& str);
+  void push_back(const std::string& str);
+  void push_front(const std::string& str);
   std::string& back();
   std::string& front();
   ... etc.
@@ -57,10 +57,12 @@ public:
   List(const List<T>&);
   List(const std::initializer_list&);
   
-  push_back(const T& value);
-  push_front(const T& value);
+  void push_back(const T& value);
+  void push_front(const T& value);
   T& back();
   T& front();
+  const T& back() const;
+  const T& front() const;
   ... etc.
   };
 ```
