@@ -52,6 +52,11 @@ private:
   } llist;
  ... etc.
 public:
+
+  List();
+  List(const List<T>&);
+  List(const std::initializer_list&);
+  
   push_back(const T& value);
   push_front(const T& value);
   T& back();
@@ -63,6 +68,8 @@ I supplied the code for my single linked list StringList implementation converte
 but it will be easier to convert your already implemented double linked list StringList class to a
 generic tempalted version instead of modifying my code. With a templated class, all methods MUST be implemented
 in the header file. You cannot put templated methods into a .cpp file!
+
+I will go over the [std::initializer_list](https://en.cppreference.com/w/cpp/utility/initializer_list) constructor in class.
 
 ## Part 2: Implement generic Stack and Queue classes.
 
