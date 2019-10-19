@@ -53,6 +53,7 @@ class List
 	// copy operator
 	List& operator=(const List& other)
 	{
+		clear();
 		reccopy(other._data);
 		return *this;
 	}
