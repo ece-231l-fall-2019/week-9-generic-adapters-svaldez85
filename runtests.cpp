@@ -12,6 +12,9 @@ typedef List<int> IntList;
 #include "Stack.h"
 typedef Stack<std::string> StringStack;
 typedef Stack<int> IntStack;
+#include"Queue.h"
+typedef Queue<std::string> StringQueue;
+typedef Queue<int> IntQueue;
 #else
 #include <list>
 typedef std::list<std::string> StringList;
@@ -81,7 +84,13 @@ int main()
 	Assert(ic.top() == 5, "top is 5");
 
 	// TODO: check all methods on IntStack...
-
+	
+	StringQueue sq;
+	sq.push("B");
+	sq.push("C");
+	Assert(sq.front() == "B", "front is B");
+	sq.pop();
+	Assert(sq.front() == "C", "front is C after pop");
 	return 0;
 }
 
