@@ -2,19 +2,53 @@
 #include <cstddef>
 
 template<typename T>
-Stack
+class Stack
 {
   protected:
      List<T> c;
   public:
-     T& top();
-     const T& top() const;
-     void push(const T&);
-     void pop();
-     size_t size() const;
-     bool empty() const;
-     Stack<T>& operator=(const Stack<T>&);
-};
+     const List<T>& Stack_list()
+     {
+	     return c;
+     }
+     T& top()
+     {
+	     return c.front();
+     }
+     const T& top() const
+     {
+	     return c.front();
+     }
+     void push(const T& other)
+     {
+	     c.push_front(other);
+     }
+     void pop()
+     {
+	     c.pop_front();
+     }
+     size_t size() const
+     {
+	     return c.size();
+     }
+     bool empty() const
+     {
+	     return c.empty();
+     }
+     Stack<T>& operator=(const Stack<T>& other)
+     {
+	     c = other.Stack_list();
+	     return *this;
+     }
 
-bool operator==(const Stack<T>&, const Stack<T>&);
-bool operator!=(const Stack<T>&, const Stack<T>&);
+};
+template<typename T>
+bool operator==(const Stack<T>& a, const Stack<T>& b)
+{
+	return a.Stack_list() == b.Stack_list();
+}
+template<typename T>
+bool operator!=(const Stack<T>& a, const Stack<T>& b)
+{
+	return a.Stack_list() != b.Stack_list();
+}
