@@ -161,39 +161,31 @@ class List
 	{
 		return _front->value;
 	}
-
+	
 	T& back()
 	{
 		return _back->value;
 	}
-
-	//Used for address debugging
-	/*
-	void printData(bool addr = 0)
+	T& at(int value)
 	{
-		std::cout << "Object at Address " << this << ":\n";
-		llist *ptr = new llist;
-		for(ptr = _front; ptr != 0; ptr = ptr->next)
+		llist *ptr = _front;
+		while(value != 0)
 		{
-			if(!addr)
-			{
-				if(ptr->str != "")
-					std::cout << ptr->str << std::endl;
-				else
-					std::cout << "-" << std::endl;
-			}
-			else
-			{
-				if(ptr->str != "")
-					std::cout << "At address " << ptr << ": " << ptr->str << std::endl;
-				else
-					std::cout << "-" << std::endl;
-			}
+			ptr++;
+			value--;
 		}
-		std::cout << std::endl;
-		delete ptr;
+		return ptr->value;
 	}
-	*/
+	const T& at(int value) const
+        {
+                llist *ptr = _front;
+                while(value != 0)
+                {
+                        ptr++;
+                        value--;
+                }
+                return ptr->value;
+        }
 
 	void push_front(const T& value)
 	{
@@ -228,7 +220,7 @@ class List
 		return (_front == 0)&&(_back == 0);
 	}
 
-	size_t size()
+	size_t size() const
 	{
 		return _size;
 	}
@@ -303,6 +295,21 @@ class List
 		}
 	}
 		
-
 };
+
+template<typename T>
+bool operator==(const List<T>& a, const List<T>& b)
+{
+	if(a.size() != b.size())
+		return false;
+	for(unsigned int i = 0;i < a.size() - 1; i++)
+	{	
+		if(a.at(i) != b.at(i))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
 #endif // __EE231_List_h__

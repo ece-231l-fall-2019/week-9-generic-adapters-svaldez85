@@ -7,7 +7,7 @@ class Stack
   protected:
      List<T> c;
   public:
-     const List<T>& Stack_list()
+     List<T>& Stack_list()
      {
 	     return c;
      }
