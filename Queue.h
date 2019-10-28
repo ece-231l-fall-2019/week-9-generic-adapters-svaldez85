@@ -6,7 +6,7 @@ class Queue
   protected:
      List<T> c;
   public:
-     const List<T>& Queue_list()
+     List<T>& Queue_list()
      {
 	     return c;
      }
@@ -45,6 +45,7 @@ class Queue
      Queue<T>& operator=(const Queue<T>& other)
      {
 	     c = other.Queue_list();
+	     return *this;
      }
 };
 template<typename T>
