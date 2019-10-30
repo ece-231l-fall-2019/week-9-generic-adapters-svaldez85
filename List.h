@@ -193,12 +193,10 @@ class List
 		newItem->value = value;
 		newItem->prev = 0;
 		newItem->next = _front;
-		//if(_front != 0)
-		//	_front->prev = newItem;
+		if(_front != 0)
+			_front->prev = newItem;
 		if(_back == 0)
 			_back = newItem;
-		else
-			_front->prev = newItem;
 		_front = newItem;
 		_size++;
 	}
@@ -211,7 +209,7 @@ class List
 		newItem->prev = _back;
 		if(_back != 0)
 			_back->next = newItem;
-		else
+		if(_front == 0)
 			_front = newItem;
 		_back = newItem;
 		_size++;
@@ -327,8 +325,8 @@ bool operator!=(const List<T>& a, const List<T>& b)
 	if(a.size() != b.size())
 		return true;
 
-	const typename List<T>::llist *aptr = a._front; //What auto is doing
-	auto bptr = b._front; //Shorter version of the above
+	auto aptr = a._front;
+	auto bptr = b._front;
 
 	for(; aptr != nullptr && bptr != nullptr; aptr=aptr->next, bptr=bptr->next)
 	{

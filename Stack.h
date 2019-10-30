@@ -39,37 +39,20 @@ class Stack
      template<typename M>
      friend bool operator==(const Stack<M>&, const Stack<M>&);
      template<typename M>
-     friend bool operator==(const Stack<M>&, const Stack<M>&);
+     friend bool operator!=(const Stack<M>&, const Stack<M>&);
 };
 template<typename T>
 bool operator==(const Stack<T>& a, const Stack<T>& b)
 {
-	if (a.size() != b.size())
-		return false;
-	auto aptr = a._front;
-	auto bptr = b._front;
-	for(;aptr!= 0; aptr = aptr->next)
-	{
-		if(aptr->value != bptr->value)
-			return false;
-		bptr = bptr->next;
-	}
-	return true;
+	auto aptr = a.c;
+	auto bptr = b.c;
+	return aptr == aptr;
 	
 }
 template<typename T>
 bool operator!=(const Stack<T>& a, const Stack<T>& b)
 {
-	if (a.size() != b.size())
-		return true;
-	auto aptr = a._front;
-	auto bptr = b._front;
-	for(;aptr!= 0; aptr = aptr->next)
-	{
-		if(aptr->value != bptr->value)
-			return true;
-		bptr = bptr->next;
-	}
-	return false;
-	
+	auto aptr = a.c;
+	auto bptr = b.c;
+	return aptr != aptr;
 }
