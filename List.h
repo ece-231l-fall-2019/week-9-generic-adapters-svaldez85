@@ -193,10 +193,12 @@ class List
 		newItem->value = value;
 		newItem->prev = 0;
 		newItem->next = _front;
-		if(_front != 0)
-			_front->prev = newItem;
+		//if(_front != 0)
+		//	_front->prev = newItem;
 		if(_back == 0)
 			_back = newItem;
+		else
+			_front->prev = newItem;
 		_front = newItem;
 		_size++;
 	}
@@ -209,7 +211,7 @@ class List
 		newItem->prev = _back;
 		if(_back != 0)
 			_back->next = newItem;
-		if(_front == 0)
+		else
 			_front = newItem;
 		_back = newItem;
 		_size++;
@@ -294,7 +296,11 @@ class List
 			}
 		}
 	}
-		
+
+	template<typename M>
+	friend bool operator==(const List<M>&, const List<M>&);
+	template<typename M>
+	friend bool operator!=(const List<M>&, const List<M>&);
 };
 
 template<typename T>
@@ -302,14 +308,36 @@ bool operator==(const List<T>& a, const List<T>& b)
 {
 	if(a.size() != b.size())
 		return false;
-	for(unsigned int i = 0;i < a.size() - 1; i++)
-	{	
-		if(a.at(i) != b.at(i))
-		{
+
+	auto aptr = a._front;
+	auto bptr = b._front;
+
+	for(; aptr != nullptr && bptr != nullptr; aptr=aptr->next, bptr=bptr->next)
+	{
+		if(aptr->value != bptr->value)
 			return false;
-		}
 	}
+
 	return true;
 }
+
+template<typename T>
+bool operator!=(const List<T>& a, const List<T>& b)
+{
+	if(a.size() != b.size())
+		return true;
+
+	const typename List<T>::llist *aptr = a._front; //What auto is doing
+	auto bptr = b._front; //Shorter version of the above
+
+	for(; aptr != nullptr && bptr != nullptr; aptr=aptr->next, bptr=bptr->next)
+	{
+		if(aptr->value != bptr->value)
+			return true;
+	}
+
+	return false;
+}
+
 
 #endif // __EE231_List_h__
