@@ -121,34 +121,41 @@ class List
 	public:
 
 	// default constructor
+	void reccopy(const llist *ptr)
+	{
+		if (ptr)
+		{
+			reccopy(ptr->next);
+			push_front(ptr->value);
+		}
+	}
+	
+	// default constructor
 	List()
 	{
-		_front = 0;
-		_back = 0;
+		_front = nullptr;
+		_back = nullptr;
 		_size = 0;
 	}
-
 	// copy constructor
-	List(const List<T>& other)
+	List(const List& other)
 	{
-		_front = other._front;
-		_back = other._back;
-		_size = other._size;
+		_front = nullptr;
+		_back = nullptr;
+		_size = 0;
+		reccopy(other._front);
 	}
-	// destructor
 	~List()
 	{
 		clear();
-		delete _front;
-		delete _back;
 	}
-
+	
 	// copy operator
 	List& operator=(const List<T>& other)
 	{
 		clear();
 		llist* ptr = other._front;
-		while(ptr != 0)
+		while(ptr != nullptr)
 		{
 			push_back(ptr->value);
 			ptr = ptr->next;
@@ -166,50 +173,31 @@ class List
 	{
 		return _back->value;
 	}
-	T& at(int value)
-	{
-		llist *ptr = _front;
-		while(value != 0)
-		{
-			ptr++;
-			value--;
-		}
-		return ptr->value;
-	}
-	const T& at(int value) const
-        {
-                llist *ptr = _front;
-                while(value != 0)
-                {
-                        ptr++;
-                        value--;
-                }
-                return ptr->value;
-        }
-
 	void push_front(const T& value)
 	{
 		llist *newItem = new llist; // Valgrind doesn't like this line
 		newItem->value = value;
-		newItem->prev = 0;
 		newItem->next = _front;
-		if(_front != 0)
+		newItem->prev = nullptr;
+		if(_front)
 			_front->prev = newItem;
-		if(_back == 0)
+		
+		if(_back == nullptr)
 			_back = newItem;
 		_front = newItem;
 		_size++;
 	}
 
 	void push_back(const T& value)
-	{
+	{	
 		llist *newItem = new llist; //Valgrind doesn't like this line
 		newItem->value = value;
-		newItem->next = 0;
+		newItem->next = nullptr;
 		newItem->prev = _back;
-		if(_back != 0)
+		
+		if(_back)
 			_back->next = newItem;
-		if(_front == 0)
+		if(_front == nullptr)
 			_front = newItem;
 		_back = newItem;
 		_size++;
@@ -217,7 +205,7 @@ class List
 
 	bool empty() const
 	{
-		return (_front == 0)&&(_back == 0);
+		return (_front == nullptr)&&(_back == nullptr);
 	}
 
 	size_t size() const
@@ -231,7 +219,7 @@ class List
 		{
 			pop_front();
 		}
-		_size = 0;
+		//_size = 0;
 	}
 
 	void pop_front()
@@ -239,9 +227,9 @@ class List
 		llist* ptr = _front;
 		_front = _front->next;
 		if(_front)
-			_front->prev = 0;
+			_front->prev = nullptr;
 		else
-			_back = 0;
+			_back = nullptr;
 		delete ptr;
 		_size--;
 	}
@@ -251,10 +239,10 @@ class List
 		_back = _back->prev;
 		if(_back)
 		{
-			_back->next = 0;
+			_back->next = nullptr;
 		}
 		else
-			_front = 0;
+			_front = nullptr;
 		delete ptr;
 		_size--;
 	}
