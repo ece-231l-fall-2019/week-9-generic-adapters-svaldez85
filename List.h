@@ -249,20 +249,18 @@ class List
 
 	void reverse()
 	{
-//		llist *ptr = new llist; //Valgrind doesn't like this line
-//		llist *tmp = new llist; //Or this line
-		for(llist* ptr = _front; ptr != 0; ptr = ptr->next)
+		if(size() <= 1)
+			return;
+		for(llist* ptr = _front; ptr != 0; ptr = ptr->prev)
 		{
 			llist* tmp = ptr->next;
 			ptr->next = ptr->prev;
 			ptr->prev = tmp;
+			//delete tmp;
 		}
 		llist* tmp2 = _back;
 		_back = _front;
 		_front = tmp2;
-//		tmp = NULL;
-//		delete tmp;
-//		delete ptr;
 	}
 
 	void unique()

@@ -142,7 +142,7 @@ int main()
 	Assert(iq.back() == 7, "back is 7 intqueue");
 	iq.pop();
 	Assert(iq.front() == 7, "front is 7 after pop");
-	
+/*	
 	Assert(sq.front() == "C", "front is C after pop");
 	Assert(sq.front() == "C", "front is C after pop");
 	Assert(sq.front() == "C", "front is C after pop");
@@ -162,7 +162,7 @@ int main()
 	Assert(sq.front() == "C", "front is C after pop");
 	Assert(sq.front() == "C", "front is C after pop");
 	Assert(sq.front() == "C", "front is C after pop");
-	
+*/	
 	return 0;
 }
 
