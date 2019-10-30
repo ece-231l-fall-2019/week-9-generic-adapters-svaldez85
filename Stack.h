@@ -44,15 +44,11 @@ class Stack
 template<typename T>
 bool operator==(const Stack<T>& a, const Stack<T>& b)
 {
-	auto aptr = a.c;
-	auto bptr = b.c;
-	return aptr == aptr;
+	return a.c == b.c;
 	
 }
 template<typename T>
 bool operator!=(const Stack<T>& a, const Stack<T>& b)
 {
-	auto aptr = a.c;
-	auto bptr = b.c;
-	return aptr != aptr;
+	return a.c != b.c;
 }

@@ -52,14 +52,10 @@ class Queue
 template<typename T>
 bool operator==(const Queue<T>& a, const Queue<T>& b)
 {
-	auto alist = a.c;
-	auto blist = b.c;
-	return alist == blist;
+	return a.c == b.c;
 }
 template<typename T>
 bool operator!=(const Queue<T>& a, const Queue<T>& b)
 {
-	auto alist = a.c;
-	auto blist = b.c;
-	return alist != blist;
+	return a.c != b.c;
 }
