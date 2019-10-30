@@ -62,7 +62,7 @@ int main()
 	Assert(a.empty() == false, "a is NOT empty");
 
 	/*-----------------------*/
-/*	b.push_back("N");
+	b.push_back("N");
 	b.push_back("Y");
 	Assert(b.front() == "N", "push_back, front == N");
 	Assert(b.back() == "Y", "push_back, back == Y");
@@ -94,7 +94,14 @@ int main()
 	c.push("Y");
 	Assert(c.top() == "Y", "top == Y");
 //	Assert(c.size() == 2, "c.size()");
-
+	StringStack ss;
+	ss = c;
+	Assert(c == ss, "string stack ==");
+	//Assert(ss.top() == "Y", "string stack == front");
+	ss.pop();
+	ss.pop();
+	Assert(ss.empty(), "pop, empty for string stack");
+	Assert(c != ss, "!= stack");
 	// TODO: check all methods on StringStack...
 
 	IntList ia;
@@ -108,7 +115,14 @@ int main()
 	ic.push(6);
 	ic.push(5);
 	Assert(ic.top() == 5, "top is 5");
-
+	IntStack hs;
+	hs = ic;
+	Assert(ic == hs, "stack ==");
+	Assert(hs.top() == 5, "stack == front");
+	hs.pop();
+	hs.pop();
+	Assert(hs.empty(), "pop, empty for stack");
+	Assert(ic != hs, "!= stack");
 	// TODO: check all methods on IntStack...
 	
 	StringQueue sq;
@@ -128,7 +142,7 @@ int main()
 	Assert(iq.back() == 7, "back is 7 intqueue");
 	iq.pop();
 	Assert(iq.front() == 7, "front is 7 after pop");
-	
+/*	
 	Assert(sq.front() == "C", "front is C after pop");
 	Assert(sq.front() == "C", "front is C after pop");
 	Assert(sq.front() == "C", "front is C after pop");
@@ -148,7 +162,7 @@ int main()
 	Assert(sq.front() == "C", "front is C after pop");
 	Assert(sq.front() == "C", "front is C after pop");
 	Assert(sq.front() == "C", "front is C after pop");
-	*/
+*/	
 	return 0;
 }
 

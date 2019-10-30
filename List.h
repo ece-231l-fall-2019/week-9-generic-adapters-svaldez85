@@ -121,34 +121,41 @@ class List
 	public:
 
 	// default constructor
+	void reccopy(const llist *ptr)
+	{
+		if (ptr)
+		{
+			reccopy(ptr->next);
+			push_front(ptr->value);
+		}
+	}
+	
+	// default constructor
 	List()
 	{
-		_front = 0;
-		_back = 0;
+		_front = nullptr;
+		_back = nullptr;
 		_size = 0;
 	}
-
 	// copy constructor
-	List(const List<T>& other)
+	List(const List& other)
 	{
-		_front = other._front;
-		_back = other._back;
-		_size = other._size;
+		_front = nullptr;
+		_back = nullptr;
+		_size = 0;
+		reccopy(other._front);
 	}
-	// destructor
 	~List()
 	{
 		clear();
-		delete _front;
-		delete _back;
 	}
-
+	
 	// copy operator
 	List& operator=(const List<T>& other)
 	{
 		clear();
 		llist* ptr = other._front;
-		while(ptr != 0)
+		while(ptr != nullptr)
 		{
 			push_back(ptr->value);
 			ptr = ptr->next;
@@ -166,50 +173,31 @@ class List
 	{
 		return _back->value;
 	}
-	T& at(int value)
-	{
-		llist *ptr = _front;
-		while(value != 0)
-		{
-			ptr++;
-			value--;
-		}
-		return ptr->value;
-	}
-	const T& at(int value) const
-        {
-                llist *ptr = _front;
-                while(value != 0)
-                {
-                        ptr++;
-                        value--;
-                }
-                return ptr->value;
-        }
-
 	void push_front(const T& value)
 	{
 		llist *newItem = new llist; // Valgrind doesn't like this line
 		newItem->value = value;
-		newItem->prev = 0;
 		newItem->next = _front;
-		if(_front != 0)
+		newItem->prev = nullptr;
+		if(_front)
 			_front->prev = newItem;
-		if(_back == 0)
+		
+		if(_back == nullptr)
 			_back = newItem;
 		_front = newItem;
 		_size++;
 	}
 
 	void push_back(const T& value)
-	{
+	{	
 		llist *newItem = new llist; //Valgrind doesn't like this line
 		newItem->value = value;
-		newItem->next = 0;
+		newItem->next = nullptr;
 		newItem->prev = _back;
-		if(_back != 0)
+		
+		if(_back)
 			_back->next = newItem;
-		if(_front == 0)
+		if(_front == nullptr)
 			_front = newItem;
 		_back = newItem;
 		_size++;
@@ -217,7 +205,7 @@ class List
 
 	bool empty() const
 	{
-		return (_front == 0)&&(_back == 0);
+		return (_front == nullptr)&&(_back == nullptr);
 	}
 
 	size_t size() const
@@ -231,7 +219,7 @@ class List
 		{
 			pop_front();
 		}
-		_size = 0;
+		//_size = 0;
 	}
 
 	void pop_front()
@@ -239,9 +227,9 @@ class List
 		llist* ptr = _front;
 		_front = _front->next;
 		if(_front)
-			_front->prev = 0;
+			_front->prev = nullptr;
 		else
-			_back = 0;
+			_back = nullptr;
 		delete ptr;
 		_size--;
 	}
@@ -251,30 +239,28 @@ class List
 		_back = _back->prev;
 		if(_back)
 		{
-			_back->next = 0;
+			_back->next = nullptr;
 		}
 		else
-			_front = 0;
+			_front = nullptr;
 		delete ptr;
 		_size--;
 	}
 
 	void reverse()
 	{
-//		llist *ptr = new llist; //Valgrind doesn't like this line
-//		llist *tmp = new llist; //Or this line
-		for(llist* ptr = _front; ptr != 0; ptr = ptr->next)
+		if(size() <= 1)
+			return;
+		for(llist* ptr = _front; ptr != 0; ptr = ptr->prev)
 		{
 			llist* tmp = ptr->next;
 			ptr->next = ptr->prev;
 			ptr->prev = tmp;
+			//delete tmp;
 		}
 		llist* tmp2 = _back;
 		_back = _front;
 		_front = tmp2;
-//		tmp = NULL;
-//		delete tmp;
-//		delete ptr;
 	}
 
 	void unique()
@@ -294,7 +280,11 @@ class List
 			}
 		}
 	}
-		
+
+	template<typename M>
+	friend bool operator==(const List<M>&, const List<M>&);
+	template<typename M>
+	friend bool operator!=(const List<M>&, const List<M>&);
 };
 
 template<typename T>
@@ -302,14 +292,36 @@ bool operator==(const List<T>& a, const List<T>& b)
 {
 	if(a.size() != b.size())
 		return false;
-	for(unsigned int i = 0;i < a.size() - 1; i++)
-	{	
-		if(a.at(i) != b.at(i))
-		{
+
+	auto aptr = a._front;
+	auto bptr = b._front;
+
+	for(; aptr != nullptr && bptr != nullptr; aptr=aptr->next, bptr=bptr->next)
+	{
+		if(aptr->value != bptr->value)
 			return false;
-		}
 	}
+
 	return true;
 }
+
+template<typename T>
+bool operator!=(const List<T>& a, const List<T>& b)
+{
+	if(a.size() != b.size())
+		return true;
+
+	auto aptr = a._front;
+	auto bptr = b._front;
+
+	for(; aptr != nullptr && bptr != nullptr; aptr=aptr->next, bptr=bptr->next)
+	{
+		if(aptr->value != bptr->value)
+			return true;
+	}
+
+	return false;
+}
+
 
 #endif // __EE231_List_h__

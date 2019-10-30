@@ -6,10 +6,6 @@ class Queue
   protected:
      List<T> c;
   public:
-     List<T>& Queue_list()
-     {
-	     return c;
-     }
      T& front()
      {
 	     return c.front();
@@ -44,17 +40,22 @@ class Queue
      }
      Queue<T>& operator=(const Queue<T>& other)
      {
-	     c = other.Queue_list();
+	     c = other.c;
 	     return *this;
      }
+     template<typename M>
+     friend bool operator==(const Queue<M>&, const Queue<M>&);
+     template<typename M>
+     friend bool operator!=(const Queue<M>&, const Queue<M>&);
+     
 };
 template<typename T>
 bool operator==(const Queue<T>& a, const Queue<T>& b)
 {
-	return a.Queue_list() == b.Queue_list();
+	return a.c == b.c;
 }
 template<typename T>
 bool operator!=(const Queue<T>& a, const Queue<T>& b)
 {
-	return a.Queue_list() != b.Queue_list();
+	return a.c != b.c;
 }

@@ -7,10 +7,6 @@ class Stack
   protected:
      List<T> c;
   public:
-     List<T>& Stack_list()
-     {
-	     return c;
-     }
      T& top()
      {
 	     return c.front();
@@ -37,18 +33,22 @@ class Stack
      }
      Stack<T>& operator=(const Stack<T>& other)
      {
-	     c = other.Stack_list();
+	     c = other.c;
 	     return *this;
      }
-
+     template<typename M>
+     friend bool operator==(const Stack<M>&, const Stack<M>&);
+     template<typename M>
+     friend bool operator!=(const Stack<M>&, const Stack<M>&);
 };
 template<typename T>
 bool operator==(const Stack<T>& a, const Stack<T>& b)
 {
-	return a.Stack_list() == b.Stack_list();
+	return a.c == b.c;
+	
 }
 template<typename T>
 bool operator!=(const Stack<T>& a, const Stack<T>& b)
 {
-	return a.Stack_list() != b.Stack_list();
+	return a.c != b.c;
 }
